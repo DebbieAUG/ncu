@@ -1,4 +1,7 @@
-// array of famous quotes
+/**
+ * An array of quote objects, each containing a 'text' and 'author' property.
+ * Used to randomly display inspirational quotes in the application.
+ */
 const quotes = [
     { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
     { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
@@ -12,9 +15,30 @@ const quotes = [
     { text: "The journey of a thousand miles begins with one step.", author: "Lao Tzu" }
 ];
 
-// function to get a random quote
+// function to get a random quote with animated transitions
 function generateQuote() {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    document.getElementById("quote").innerText = `${quotes[randomIndex].text}`;
-    document.getElementById("author").innerText = `- ${quotes[randomIndex].author}`;
+    const quoteElem = document.getElementById("quote");
+    const authorElem = document.getElementById("author");
+
+    // Add fade-out class
+    quoteElem.classList.add("fade-out");
+    authorElem.classList.add("fade-out");
+
+    setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        quoteElem.innerText = quotes[randomIndex].text;
+        authorElem.innerText = `- ${quotes[randomIndex].author}`;
+
+        // Remove fade-out, add fade-in
+        quoteElem.classList.remove("fade-out");
+        authorElem.classList.remove("fade-out");
+        quoteElem.classList.add("fade-in");
+        authorElem.classList.add("fade-in");
+
+        // Remove fade-in after animation completes
+        setTimeout(() => {
+            quoteElem.classList.remove("fade-in");
+            authorElem.classList.remove("fade-in");
+        }, 500);
+    }, 500);
 }
